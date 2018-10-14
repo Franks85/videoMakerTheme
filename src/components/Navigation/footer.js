@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { media } from '../../styledComponents/mediaQueryHelper';
 
 const Wrapper = styled.footer`
   height: 40vh;

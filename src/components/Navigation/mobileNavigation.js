@@ -1,134 +1,68 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { media } from "../../styledComponents/mediaQueryHelper";
+import Toggle from "../../Utilities/Toggle";
+import { Spring, config, animated } from "react-spring";
 
-const MobileNavContainer = styled.div`
-  ${media.greaterThan("phone")`
+const MobileNavContainer = styled(animated.div)`
+  ${media.greaterThan("tablet")`
       display: none;
   `};
 `;
 
-const MobileNavToggleLabelIcon = styled.span`
-  margin-top: 3.5rem;
+const MobileNavToggleLabelIcon = styled(animated.div)`
   position: relative;
-  &,
-  &:before,
-  &:after {
-    width: 3rem;
-    height: 3px;
-    background-color: #7ca3ff;
-    display: inline-block;
-    ${media.lessThan("phone")`
-      width: 2.5rem;
-      height: 2px;
-    `};
-  }
-  &:before,
-  &:after {
-    content: "";
-    position: absolute;
-    left: 0;
-    transition: all 0.2s;
-  }
-  &:before {
-    top: -0.8rem;
-  }
-  &:after {
-    top: 0.8rem;
-  }
-  ${media.lessThan("phone")`
-    margin-top: 2.5rem;
-`};
+  width: 4rem;
+  height: 4px;
+  background-color: #000;
+  display: inline-block;
+  margin-top: 3rem;
+`;
+
+const MobileNavToggleLabelIconTop = styled(MobileNavToggleLabelIcon)`
+  position: absolute;
+  left: 0;
+  top: -1rem;
+`;
+
+const MobileNavToggleLabelIconBottom = styled(MobileNavToggleLabelIcon)`
+  position: absolute;
+  left: 0;
+  top: 1rem;
 `;
 
 const MobileNavToggleLabel = styled.label`
-  background-color: #e2fffc;
+  display: flex;
+  flex-direction: column;
   text-align: center;
   cursor: pointer;
-  height: 7rem;
-  width: 7rem;
-  border-radius: 50%;
   position: fixed;
   top: 2rem;
-  left: 3rem;
-  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.1);
+  left: 4rem;
   z-index: 200;
-  &:hover ${MobileNavToggleLabelIcon}:before {
-    top: -1rem;
-  }
-  &:hover ${MobileNavToggleLabelIcon}:after {
-    top: 1rem;
-  }
-  ${media.lessThan("phone")`
-    height: 5rem;
-    width: 5rem;
-`};
 `;
 
-const MobileNavBg = styled.div`
-  height: 6rem;
-  width: 6rem;
-  border-radius: 50%;
-  position: fixed;
-  top: 2.5rem;
-  left: 3.5rem;
-  background: radial-gradient(azure, blue);
-  z-index: 100;
-  transition: transform 0.8s cubic-bezier(0.86, 0, 0.07, 1);
-  ${media.lessThan("phone")`
-    height: 4rem;
-    width: 4rem;
-`};
-`;
-
-const MobileNav = styled.nav`
+const MobileNav = styled(animated.nav)`
   height: 100vh;
-  width: 0;
+  background-color: #18191b;
   position: fixed;
+  width: 100vw;
   top: 0;
   left: 0;
-  opacity: 0;
   z-index: 150;
-  transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-`;
-
-const MobileNavToggle = styled.input`
-  display: none;
-  &:checked ~ ${MobileNavBg} {
-    transform: scale(80);
-  }
-
-  &:checked ~ ${MobileNav} {
-    opacity: 1;
-    width: 100%;
-  }
-  &:checked + ${MobileNavToggleLabel} ${MobileNavToggleLabelIcon} {
-    background-color: transparent;
-  }
-  &:checked + ${MobileNavToggleLabel} ${MobileNavToggleLabelIcon}:before {
-    top: 0;
-    transform: rotate(135deg);
-  }
-  &:checked + ${MobileNavToggleLabel} ${MobileNavToggleLabelIcon}:after {
-    top: 0;
-    transform: rotate(-135deg);
-  }
 `;
 
 const MobileNavList = styled.ul`
   list-style: none;
   position: absolute;
-  top: 50%;
+  top: 30%;
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
-  ${media.lessThan("phone")`
-  top: 30%;
-`};
 `;
 
 const MobileNavItem = styled.li`
-  margin: 1rem;
+  margin: 2rem 0;
 `;
 
 const MobileNavLink = styled.a`
@@ -136,8 +70,8 @@ const MobileNavLink = styled.a`
   :visited {
     display: inline-block;
     font-size: 2.8rem;
+    color: #fff;
     letter-spacing: 0.3rem;
-    color: white;
     padding: 0.8rem 1.6rem;
     text-decoration: none;
     text-transform: uppercase;
@@ -158,57 +92,87 @@ const MobileNavLink = styled.a`
   }
 `;
 
-class mobileNavigation extends Component {
-
-  state = {
-    openLink: false,
-    isOpenMenu: false
-  }
-
-  toggleLink = () => {
-    this.setState({
-      openLink: true,
-      isOpenMenu: false
-    })
-  }
-
-  toggleNav = () => {
-    this.setState({
-      openLink: false,
-      isOpenMenu: true
-    })
-  }
+class MobileNavigation extends Component {
   render() {
-    const { openLink, isOpenMenu } = this.state;
-    return (
+    const Content = ({
+      toggle,
+      open,
+      iconBg,
+      iconRotation,
+      iconPos,
+      opacity
+    }) => (
       <MobileNavContainer>
-        {openLink && !isOpenMenu ? <MobileNavToggle type="checkbox" id="navi-toggle" checked={false} /> : <MobileNavToggle type="checkbox" id="navi-toggle" />}
-        <MobileNavToggleLabel htmlFor="navi-toggle" onClick={this.toggleNav}>
-          <MobileNavToggleLabelIcon />
+        <MobileNavToggleLabel onClick={toggle}>
+          <MobileNavToggleLabelIconTop
+            style={{
+              backgroundColor: iconBg.interpolate(iconBg => iconBg),
+              transform: iconRotation.interpolate(
+                iconRotation => `rotate(${iconRotation}deg)`
+              ),
+              top: iconPos.interpolate(iconPos => iconPos)
+            }}
+          />
+          <MobileNavToggleLabelIcon
+            style={{ opacity: opacity.interpolate(opacity => opacity) }}
+          />
+          <MobileNavToggleLabelIconBottom
+            style={{
+              backgroundColor: iconBg.interpolate(iconBg => iconBg),
+              transform: iconRotation.interpolate(
+                iconRotation => `rotate(-${iconRotation}deg)`
+              ),
+              top: iconPos.interpolate(iconPos => iconPos)
+            }}
+          />
         </MobileNavToggleLabel>
-        <MobileNavBg />
-        <MobileNav>
+
+        <MobileNav
+          style={{
+            transform: open.interpolate(open => `translate3d(${open}%, 0, 0)`)
+          }}
+        >
           <MobileNavList>
             <MobileNavItem>
-              <MobileNavLink href="/" onClick={this.toggleLink}>Home</MobileNavLink>
+              <MobileNavLink href="#about" onClick={toggle}>
+                About
+              </MobileNavLink>
             </MobileNavItem>
             <MobileNavItem>
-              <MobileNavLink href="#" onClick={this.toggleLink}>Gallery</MobileNavLink>
+              <MobileNavLink href="#works" onClick={toggle}>
+                Works
+              </MobileNavLink>
             </MobileNavItem>
             <MobileNavItem>
-              <MobileNavLink href="#" onClick={this.toggleLink}>Camere</MobileNavLink>
-            </MobileNavItem>
-            <MobileNavItem>
-              <MobileNavLink href="#" onClick={this.toggleLink}>Contatti</MobileNavLink>
-            </MobileNavItem>
-            <MobileNavItem>
-              <MobileNavLink href="#">Regolamento</MobileNavLink>
+              <MobileNavLink href="#contact" onClick={toggle}>
+                Contact
+              </MobileNavLink>
             </MobileNavItem>
           </MobileNavList>
         </MobileNav>
       </MobileNavContainer>
     );
+    return (
+      <Toggle>
+        {({ on, toggle }) => (
+          <Spring
+            native
+            config={config.default}
+            to={{
+              open: on ? 0 : -100,
+              iconBg: on ? "#fff" : "#000",
+              iconRotation: on ? 135 : 0,
+              iconPos: on ? 0 : "",
+              opacity: on ? 0 : 1
+            }}
+            toggle={toggle}
+            children={Content}
+          />
+        )}
+      </Toggle>
+    );
   }
 }
 
-export default mobileNavigation;
+export default MobileNavigation;
+

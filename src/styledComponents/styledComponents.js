@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { media } from './mediaQueryHelper';
 
 const SectionWrapper  = styled.div`
   display: flex;
@@ -47,16 +46,6 @@ const ContentBox = styled.div`
   width: 100%;
   height: 90%;
   margin: 5% auto;
-  ${media.lessThan("tabPort")`
-    flex-direction: column-reverse;
-    justify-content: center;
-    align-items: center;
-  `};
-  ${media.lessThan("phone")`
-    margin: 0;
-    padding: 0;
-    align-items: stretch;
-  `};
 `;
 
 const AnimatedButton = styled.a`

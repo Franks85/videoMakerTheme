@@ -1,21 +1,30 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import MobileNavigation from "./mobileNavigation";
 import { media } from "../../styledComponents/mediaQueryHelper";
-import headerBg from './img/headerBg.jpg';
-import {reveal} from '../../styledComponents/keyframes'
-import titleIcon from './img/aperture.png'
-import Toggle from '../../Utilities/Toggle';
-import {Spring, config} from 'react-spring'
- 
-const Wrapper = styled.div`
-`;
+import headerBg from "./img/headerBg.jpg";
+import { reveal } from "../../styledComponents/keyframes";
+import titleIcon from "./img/aperture.png";
+import Toggle from "../../Utilities/Toggle";
+import MobileNav from '../Navigation/mobileNavigation';
+import { Spring, config } from "react-spring";
+
+const Wrapper = styled.div``;
 
 const HeaderBox = styled.header`
   font-family: 'Rokkitt', serif;
   position: relative;
   height: 100vh;
-  background: linear-gradient(rgba(24,25,27,.3), rgba(24,25,27,.1)), url('${headerBg}') center / cover;
+  z-index: 10;
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(24,25,27,.3), rgba(24,25,27,.1)), url('${headerBg}') center / cover;
+    filter: sepia(30%);
+  }
 `;
 
 const NavBox = styled.nav`
@@ -24,17 +33,18 @@ const NavBox = styled.nav`
   left: 8rem;
   width: 40%;
   height: 5rem;
+  ${media.lessThan("tablet")`
+      display: none;
+  `};
 `;
 
 const NavList = styled.ul`
-    list-style: none;
-    display: flex;
-    justify-content: space-between;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
 `;
 
-const NavItem = styled.li`
-  
-`;
+const NavItem = styled.li``;
 
 const NavLink = styled.a`
   &:link,
@@ -89,6 +99,9 @@ const HeaderTitleIcon = styled.div`
   height: 6rem;
   width: 6rem;
   cursor: pointer;
+  ${media.lessThan("tablet")`
+      display: none;
+  `};
 `;
 
 const ArtistNameBox = styled.div`
@@ -96,11 +109,11 @@ const ArtistNameBox = styled.div`
   right: 17%;
   top: 40%;
   width: 30%;
-  animation: 2s ${reveal} ease-in-out ;
+  animation: 2s ${reveal} ease-in-out;
 `;
 
 const ArtistNameText = styled.h3`
-  font-family: 'Rock Salt', cursive;
+  font-family: "Rock Salt", cursive;
   color: #ddd;
   font-size: 2.8rem;
   display: inline-block;
@@ -108,57 +121,70 @@ const ArtistNameText = styled.h3`
 
 class Header extends Component {
   render() {
-
-    const Content = ({filter, toggle, nameColor, linkColor, x, y}) => (
-      <HeaderBox  style={{filter: `brightness(${filter}%)`}}>
-          <NavBox>
-            <NavList>
-              <NavItem >
-                <NavLink style={{color: `${linkColor}`}} href='#about'>About</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink style={{color: `${linkColor}`}} href='#works'>Works</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink style={{color: `${linkColor}`}} href='#contact'>Contact</NavLink>
-              </NavItem>
-            </NavList>
-          </NavBox>
-          <HeaderTitleBox >
-        <HeaderTitleIcon onClick={toggle} />
-        <HeaderTitle style={{color: `${linkColor}`}}>video maker / photographer</HeaderTitle>
-      </HeaderTitleBox>
-          <ArtistNameBox>
-            <ArtistNameText style={{color: `${nameColor}`, transform: `translate(${x}rem, ${y}rem)`}}>Matteo <br/>Toccaceli</ArtistNameText>
-          </ArtistNameBox>
-        </HeaderBox>
+    const Content = ({ filter, toggle, nameColor, linkColor, x, y }) => (
+      <HeaderBox style={{ filter: `brightness(${filter}%)` }}>
+        <MobileNav />
+        <NavBox>
+          <NavList>
+            <NavItem>
+              <NavLink style={{ color: `${linkColor}` }} href="#about">
+                About
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink style={{ color: `${linkColor}` }} href="#works">
+                Works
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink style={{ color: `${linkColor}` }} href="#contact">
+                Contact
+              </NavLink>
+            </NavItem>
+          </NavList>
+        </NavBox>
+        <HeaderTitleBox>
+          <HeaderTitleIcon onClick={toggle} />
+          <HeaderTitle style={{ color: `${linkColor}` }}>
+            video maker 
+          </HeaderTitle>
+        </HeaderTitleBox>
+        <ArtistNameBox>
+          <ArtistNameText
+            style={{
+              color: `${nameColor}`,
+              transform: `translate(${x}rem, ${y}rem)`
+            }}
+          >
+            Matteo <br />
+            Toccaceli
+          </ArtistNameText>
+        </ArtistNameBox>
+      </HeaderBox>
     );
 
     return (
       <Wrapper>
-        <MobileNavigation />
-        
-          <Toggle>
-            {({ toggle, on }) => (
-              <Spring 
-                config= {config.slow}
-                to={{
-                  filter: on ? 70 : 120,
-                  linkColor: on ? 'rgba(203, 25, 25,.7)' : '#000',
-                  nameColor: on ? 'rgb(122, 29, 29)' : '#ddd',
-                  x: on ? -32 : 0,
-                  y: on ? -7 : 0 
-                }}
-                toggle={toggle}
-                children={Content}
-              />
-            )}
-      </Toggle>
-      
-        
+        <Toggle>
+          {({ toggle, on }) => (
+            <Spring
+              config={config.slow}
+              to={{
+                filter: on ? 70 : 120,
+                linkColor: on ? "rgba(203, 25, 25,.7)" : "#000",
+                nameColor: on ? "rgb(122, 29, 29)" : "#ddd",
+                x: on ? -32 : 0,
+                y: on ? -7 : 0
+              }}
+              toggle={toggle}
+              children={Content}
+            />
+          )}
+        </Toggle>
       </Wrapper>
     );
   }
 }
 
 export default Header;
+
