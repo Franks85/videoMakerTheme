@@ -9,10 +9,10 @@ import Contact from "../../components/ContactSection/contactSection";
 import projectImg1 from "../../components/WorkSection/img/work2.jpg";
 import projectImg2 from "../../components/WorkSection/img/work3.jpg";
 import projectImg3 from "../../components/WorkSection/img/work4.jpg";
+import {media} from '../../styledComponents/mediaQueryHelper';
 
 const WorksContainer = styled.div`
-  position: relative;
-`;
+position: relative`;
 
 const WorkImageDescLink = styled.button`
   position: absolute;
@@ -24,18 +24,22 @@ const WorkImageDescLink = styled.button`
   color: #2f86c6;
   font-size: 1.8rem;
   padding: 0.8rem;
+  background-color: transparent;
+  border-radius: 3px;
   &:hover {
     background-color: #2f86c6;
     color: white;
-    text-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.7);
   }
+  ${media.lessThan("phone")`
+     bottom: 5%;
+  `};
 `;
 
 const pages = [
   style => (
     <animated.div>
       <Works
-        style={{ opacity: style.opacity.interpolate(opacity => opacity) }}
+        style={{ opacity: style.display }}
         bg={projectImg1}
         title="Lake areal view"
         description="Pellentesque viverra urna eu hendrerit lobortis. In quis auctor felis,
@@ -47,7 +51,7 @@ const pages = [
   style => (
     <animated.div>
       <Works
-      style={{ opacity: style.opacity.interpolate(opacity => opacity) }}
+      style={{ opacity: style.display }}
         bg={projectImg2}
         title="Marriage couple"
         description=" Morbi ac rutrum dolor. Aenean at justo
@@ -58,7 +62,7 @@ const pages = [
   style => (
     <animated.div>
       <Works
-      style={{ opacity: style.opacity.interpolate(opacity => opacity) }}
+      style={{ opacity: style.display }}
         bg={projectImg3}
         title="Lake view"
         description="Aenean at justo
@@ -88,11 +92,10 @@ class Landing extends Component {
             Load more projects &rarr;
           </WorkImageDescLink>
           <Transition
-            native
             config={config.default}
-            from={{ opacity: 0 }}
-            enter={{ opacity: 1 }}
-            leave={{ opacity: 0 }}
+            from={{ display: 'none' }}
+            enter={{ display: 'block' }}
+            leave={{ display: 'none' }}
           >
             {pages[index]}
           </Transition>

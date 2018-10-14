@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import avatar from "../AboutSection/img/avatar.jpg";
+import {media} from '../../styledComponents/mediaQueryHelper'
 
 const AvatarCaption = styled.p`
   position: absolute;
@@ -37,6 +38,13 @@ const AvatarCircle = styled.div`
   &:hover {
     filter: grayscale(0%);
   }
+  ${media.lessThan("tablet")`
+      width: 12rem;
+      height: 12rem;
+  `};
+  ${media.lessThan("phone")`
+      display: none;
+  `};
 `;
 
 const Avatar = (props) => {

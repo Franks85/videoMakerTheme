@@ -13,7 +13,7 @@ const Wrapper = styled.div``;
 const HeaderBox = styled.header`
   font-family: 'Rokkitt', serif;
   position: relative;
-  height: 100vh;
+  min-height: 70rem;
   z-index: 10;
   &:before {
     content: '';
@@ -25,6 +25,7 @@ const HeaderBox = styled.header`
     background: linear-gradient(rgba(24,25,27,.3), rgba(24,25,27,.1)), url('${headerBg}') center / cover;
     filter: sepia(30%);
   }
+  
 `;
 
 const NavBox = styled.nav`

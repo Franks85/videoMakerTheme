@@ -9,11 +9,16 @@ import contactBg from "./img/contactBg.jpg";
 import Avatar from "../Avatar/avatar";
 import withReveal from 'react-reveal/withReveal';
 import Zoom from 'react-reveal/Zoom';
+import {media} from '../../styledComponents/mediaQueryHelper';
 
 const SectionLeft = styled.div`
   position: relative;
   flex: 1;
   background: linear-gradient(rgba(0,0,0,.6), rgba(0,0,0,.8)) , url('${contactBg}') center / cover;
+  ${media.lessThan("tablet")`
+      flex: .5;
+      padding: 0;
+  `};
 `;
 
 const SectionRight = styled.div`

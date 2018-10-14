@@ -1,9 +1,11 @@
 import styled from "styled-components";
+import {media} from './mediaQueryHelper';
 
 const SectionWrapper  = styled.div`
   display: flex;
-  height: 100vh;
+  min-height: 60rem;
   position: relative;
+  
 `;
 
 const SectionTitleBox = styled.div`
@@ -12,6 +14,9 @@ const SectionTitleBox = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   width: 50%;
+  ${media.lessThan("phone")`
+    top: 30%;
+  `};
 `;
 
 const SectionTitleText = styled.h2`
@@ -20,6 +25,9 @@ const SectionTitleText = styled.h2`
   letter-spacing: 0.5rem;
   color: #fff;
   font-size: 4.5rem;
+  ${media.lessThan("tablet")`
+      transform: rotate(90deg);
+  `};
 `;
 
 const SectionTitleSkew = styled.h2`

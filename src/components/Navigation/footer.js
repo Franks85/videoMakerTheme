@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const Wrapper = styled.footer`
-  height: 40vh;
+  height: 30rem;
   background-color: #242222;
   display: flex;
   position: relative;

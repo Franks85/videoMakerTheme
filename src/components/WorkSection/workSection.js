@@ -8,9 +8,10 @@ import {
 import worksBg from "./img/worksBg.jpg";
 import cursor from "./img/cursor.png";
 import Toggle from "../../Utilities/Toggle";
-import Avatar from '../Avatar/avatar'
-import { Spring, config} from 'react-spring';
-
+import Avatar from "../Avatar/avatar";
+import { Spring, config } from "react-spring";
+import { media } from "../../styledComponents/mediaQueryHelper";
+import Media from "react-media";
 
 const SectionLeft = styled.div`
   position: relative;
@@ -67,6 +68,9 @@ const WorkImageDesc = styled.div`
   height: 100%;
   padding: 4rem;
   padding-left: 10rem;
+  ${media.lessThan("phone")`
+  padding: 2rem;
+  `};
 `;
 
 const WorkImageDescText = styled.p`
@@ -74,62 +78,79 @@ const WorkImageDescText = styled.p`
   color: #7d6c65;
 `;
 
-const AvatarAnim = styled(Avatar)`
-  
-`;
+const AvatarAnim = styled(Avatar)``;
 
 class WorkSection extends Component {
-
   render() {
-    const {bg, title, description} = this.props;
-    const Content = ({ opacity, toggle, on, textRotate, leftResize, imgResize }) => (
-       <SectionWrapper id='works'>
-        <SectionLeft style={{ opacity: `${opacity}`, flex: `${leftResize}`}} >
-        <AvatarAnim name='Teka'/>
-          <SectionTitleBox>
-            <SectionTitleText style={{transform: `${textRotate}`}}>Works</SectionTitleText>
-          </SectionTitleBox>
-        </SectionLeft>
+    const { bg, title, description } = this.props;
+    const Content = ({
+      opacity,
+      toggle,
+      on,
+      textRotate,
+      leftResize,
+      imgResize
+    }) => (
+      <SectionWrapper id="works">
+        <Media query={{ maxWidth: 760 }}>
+          {matches =>
+            matches ? (
+              <SectionLeft style={{ flex: 0.5 }}>
+                <AvatarAnim name="Teka" />
+                <SectionTitleBox>
+                  <SectionTitleText style={{ transform: `rotate(90deg)` }}>
+                    Works
+                  </SectionTitleText>
+                </SectionTitleBox>
+              </SectionLeft>
+            ) : (
+              <SectionLeft
+                style={{ opacity: `${opacity}`, flex: `${leftResize}` }}
+              >
+                <AvatarAnim name="Teka" />
+                <SectionTitleBox>
+                  <SectionTitleText style={{ transform: `${textRotate}` }}>
+                    Works
+                  </SectionTitleText>
+                </SectionTitleBox>
+              </SectionLeft>
+            )
+          }
+        </Media>
+
         <SectionRight>
-          <WorkImageBoxOuter onClick={toggle} style={{flex:`${imgResize}`}}>
+          <WorkImageBoxOuter onClick={toggle} style={{ flex: `${imgResize}` }}>
             <WorkImageBoxInner background={bg}>
               <WorkImageTitle>{title}</WorkImageTitle>
             </WorkImageBoxInner>
           </WorkImageBoxOuter>
           <WorkImageBoxOuter>
-           <WorkImageDesc>
-             <WorkImageDescText>
-              {description}
-             </WorkImageDescText>
-             
-           </WorkImageDesc>
-          
+            <WorkImageDesc>
+              <WorkImageDescText>{description}</WorkImageDescText>
+            </WorkImageDesc>
           </WorkImageBoxOuter>
-          
         </SectionRight>
-       
       </SectionWrapper>
     );
 
     return (
       <Toggle>
-      {({ toggle, on }) => (
-        <Spring 
-          config= {config.slow}
-          to={{
-            opacity: on ? .7 : .9,
-            textRotate: on ? 'rotate(90deg)' : 'rotate(0deg)',
-            leftResize: on ? .3 : 1,
-            imgResize: on ? 1.4 : 1
-          }}
-          toggle={toggle}
-          children={Content}
-        />
-      )}
+        {({ toggle, on }) => (
+          <Spring
+            config={config.slow}
+            to={{
+              opacity: on ? 0.7 : 0.9,
+              textRotate: on ? "rotate(90deg)" : "rotate(0deg)",
+              leftResize: on ? 0.3 : 1,
+              imgResize: on ? 1.4 : 1
+            }}
+            toggle={toggle}
+            children={Content}
+          />
+        )}
       </Toggle>
     );
   }
 }
 
 export default WorkSection;
-
