@@ -9,10 +9,11 @@ import Contact from "../../components/ContactSection/contactSection";
 import projectImg1 from "../../components/WorkSection/img/work2.jpg";
 import projectImg2 from "../../components/WorkSection/img/work3.jpg";
 import projectImg3 from "../../components/WorkSection/img/work4.jpg";
-import {media} from '../../styledComponents/mediaQueryHelper';
+import { media } from "../../styledComponents/mediaQueryHelper";
 
 const WorksContainer = styled.div`
-position: relative`;
+  position: relative;
+`;
 
 const WorkImageDescLink = styled.button`
   position: absolute;
@@ -51,7 +52,7 @@ const pages = [
   style => (
     <animated.div>
       <Works
-      style={{ opacity: style.display }}
+        style={{ opacity: style.display }}
         bg={projectImg2}
         title="Marriage couple"
         description=" Morbi ac rutrum dolor. Aenean at justo
@@ -62,7 +63,7 @@ const pages = [
   style => (
     <animated.div>
       <Works
-      style={{ opacity: style.display }}
+        style={{ opacity: style.display }}
         bg={projectImg3}
         title="Lake view"
         description="Aenean at justo
@@ -93,9 +94,9 @@ class Landing extends Component {
           </WorkImageDescLink>
           <Transition
             config={config.default}
-            from={{ display: 'none' }}
-            enter={{ display: 'block' }}
-            leave={{ display: 'none' }}
+            from={{ display: "none" }}
+            enter={{ display: "block" }}
+            leave={{ display: "none" }}
           >
             {pages[index]}
           </Transition>
@@ -108,4 +109,3 @@ class Landing extends Component {
 }
 
 export default Landing;
-

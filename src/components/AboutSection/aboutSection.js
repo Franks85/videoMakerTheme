@@ -8,6 +8,9 @@ import {
 import aboutImg from "./img/about.jpg";
 import Avatar from "../Avatar/avatar";
 import { media } from "../../styledComponents/mediaQueryHelper";
+import withReveal from "react-reveal/withReveal";
+import HeadShake from "react-reveal/HeadShake";
+import Zoom from "react-reveal/Zoom";
 
 const SectionLeft = styled.div`
   position: relative;
@@ -26,26 +29,32 @@ const SectionRight = styled.div`
   padding-top: 5rem;
 `;
 
-const SectionRightTitle = styled.h3`
-  font-size: 2.2rem;
-  padding: 2rem;
-  text-align: center;
-  text-shadow: 0 0.2rem 0.3rem rgba(255, 255, 255, 0.5);
-  ${media.lessThan("phone")`
+const SectionRightTitle = withReveal(
+  styled.h3`
+    font-size: 2.2rem;
+    padding: 2rem;
+    text-align: center;
+    text-shadow: 0 0.2rem 0.3rem rgba(255, 255, 255, 0.5);
+    ${media.lessThan("phone")`
     font-size: 2rem;
   `};
-`;
+  `,
+  <HeadShake />
+);
 
-const SectionRightDescription = styled.p`
-  font-family: "PT Sans", sans-serif;
-  font-size: 1.6rem;
-  text-align: justify;
-  margin: 2rem 4rem 2rem 10rem;
-  ${media.lessThan("phone")`
+const SectionRightDescription = withReveal(
+  styled.p`
+    font-family: "PT Sans", sans-serif;
+    font-size: 1.6rem;
+    text-align: justify;
+    margin: 2rem 4rem 2rem 10rem;
+    ${media.lessThan("phone")`
       font-size: 1.5rem;
       margin: 2rem 2rem 2rem 4rem;
   `};
-`;
+  `,
+  <Zoom delay={600} />
+);
 
 const AboutSection = () => {
   return (

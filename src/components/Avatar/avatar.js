@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import avatar from "../AboutSection/img/avatar.jpg";
-import {media} from '../../styledComponents/mediaQueryHelper'
+import { media } from "../../styledComponents/mediaQueryHelper";
 
 const AvatarCaption = styled.p`
   position: absolute;
@@ -47,7 +47,7 @@ const AvatarCircle = styled.div`
   `};
 `;
 
-const Avatar = (props) => {
+const Avatar = props => {
   return (
     <AvatarCircle>
       <AvatarCaption>{props.name}</AvatarCaption>

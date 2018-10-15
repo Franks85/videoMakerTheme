@@ -5,8 +5,10 @@ import headerBg from "./img/headerBg.jpg";
 import { reveal } from "../../styledComponents/keyframes";
 import titleIcon from "./img/aperture.png";
 import Toggle from "../../Utilities/Toggle";
-import MobileNav from '../Navigation/mobileNavigation';
+import MobileNav from "../Navigation/mobileNavigation";
 import { Spring, config } from "react-spring";
+import Flash from "react-reveal/Flash";
+import withReveal from "react-reveal/withReveal";
 
 const Wrapper = styled.div``;
 
@@ -74,15 +76,18 @@ const NavLink = styled.a`
   }
 `;
 
-const HeaderTitleBox = styled.div`
-  position: absolute;
-  left: 5rem;
-  bottom: 5rem;
-  height: 6.5rem;
-  display: flex;
-  justify-content: start;
-  align-items: center;
-`;
+const HeaderTitleBox = withReveal(
+  styled.div`
+    position: absolute;
+    left: 5rem;
+    bottom: 5rem;
+    height: 6.5rem;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+  `,
+  <Flash delay={800} />
+);
 
 const HeaderTitle = styled.h2`
   font-style: normal;
@@ -101,7 +106,9 @@ const HeaderTitleIcon = styled.div`
   width: 6rem;
   cursor: pointer;
   ${media.lessThan("tablet")`
-      display: none;
+      position: fixed;
+      top: 2rem;
+      right: 3rem;
   `};
 `;
 
@@ -147,7 +154,7 @@ class Header extends Component {
         <HeaderTitleBox>
           <HeaderTitleIcon onClick={toggle} />
           <HeaderTitle style={{ color: `${linkColor}` }}>
-            video maker 
+            video maker
           </HeaderTitle>
         </HeaderTitleBox>
         <ArtistNameBox>
@@ -188,4 +195,3 @@ class Header extends Component {
 }
 
 export default Header;
-
