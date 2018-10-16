@@ -36,6 +36,8 @@ const WorkImageDescLink = styled.button`
   `};
 `;
 
+
+
 const pages = [
   style => (
     <animated.div>
@@ -84,6 +86,7 @@ class Landing extends Component {
 
   render() {
     const { index } = this.state;
+    console.log(pages)
     return (
       <Fragment>
         <Header />
