@@ -3,10 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "gsap": "^2.0.2",
     "react": "^16.4.2",
     "react-app-rewire-styled-components": "^3.0.2",
     "react-dom": "^16.4.2",
     "react-icomoon": "^1.0.0",
+    "react-inview-monitor": "^2.2.0",
     "react-media": "^1.8.0",
     "react-reveal": "^1.2.2",
     "react-router-dom": "^4.3.1",
@@ -19,7 +21,7 @@
   "scripts": {
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
-    "test": "jest --verbose",
+    "test": "NODE_ENV=test jest --watch",
     "eject": "react-scripts eject"
   },
   "jest": {

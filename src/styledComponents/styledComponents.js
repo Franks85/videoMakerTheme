@@ -1,11 +1,10 @@
 import styled from "styled-components";
-import {media} from './mediaQueryHelper';
+import { media } from "./mediaQueryHelper";
 
-const SectionWrapper  = styled.div`
+const SectionWrapper = styled.div`
   display: flex;
-  min-height: 60rem;
+  min-height: 65rem;
   position: relative;
-  
 `;
 
 const SectionTitleBox = styled.div`
@@ -35,7 +34,8 @@ const SectionTitleSkew = styled.h2`
   font-size: 3rem;
   font-weight: bold;
   text-transform: uppercase;
-  background-image: linear-gradient(to right, ${props => props.theme.colorPrimaryLight}, ${props => props.theme.colorPrimary});
+  background-image: linear-gradient(
+    to right, ${props => props.theme.colorPrimaryLight}, ${props => props.theme.colorPrimary});
   background-clip: text;
   color: transparent;
   letter-spacing: 0.2rem;
@@ -99,4 +99,11 @@ const AnimatedButton = styled.a`
   }
 `;
 
-export { SectionWrapper , SectionTitleBox, SectionTitleText , SectionTitleSkew, ContentBox, AnimatedButton };
+export {
+  SectionWrapper,
+  SectionTitleBox,
+  SectionTitleText,
+  SectionTitleSkew,
+  ContentBox,
+  AnimatedButton
+};

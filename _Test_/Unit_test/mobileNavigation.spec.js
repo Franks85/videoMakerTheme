@@ -1,5 +1,5 @@
 import React from "react";
-import { shallow } from "../setup/test_setup_utils";
+import { shallow, mount } from "../setup/test_setup_utils";
 import MobileNav from "../../src/components/Navigation/mobileNavigation";
 
 describe("mobile navigation", () => {
@@ -7,4 +7,10 @@ describe("mobile navigation", () => {
     const wrapper = shallow(<MobileNav />);
     expect(wrapper.exists()).toBe(true);
   });
+
+  test('navList have three child element', () => {
+      const wrapper = mount(<MobileNav />);
+      expect(wrapper.find('ul').children()).toHaveLength(3);
+  })
+ 
 });

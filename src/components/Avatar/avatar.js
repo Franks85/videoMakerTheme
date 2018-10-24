@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import avatar from "../AboutSection/img/avatar.jpg";
 import { media } from "../../styledComponents/mediaQueryHelper";
 
 const AvatarCaption = styled.p`
@@ -18,19 +17,18 @@ const AvatarCaption = styled.p`
 
 const AvatarCircle = styled.div`
   position: absolute;
-  top: 70%;
-  left: 100%;
-  z-index: 100;
+  top: ${props => props.top}%;
+  left: ${props => props.left}%;
   transform: translate(-50%, -50%);
   backface-visibility: hidden;
   border-radius: 50%;
-  background: url('${avatar}') center / cover;
+  background: url(${props => props.url}) center / cover;
   filter: grayscale(100%) drop-shadow(5px 5px 8px black);
   z-index: 10;
-  width: 14rem;
-  height: 14rem;
+  width: ${props => props.width}rem;
+  height: ${props => props.height}rem;
   cursor: pointer;
-  transition: filter .2s;
+  transition: filter 0.2s;
   &:hover ${AvatarCaption} {
     opacity: 1;
     transform: translate(-50%, -50%);
@@ -43,13 +41,14 @@ const AvatarCircle = styled.div`
       height: 12rem;
   `};
   ${media.lessThan("phone")`
-      display: none;
+      width: 8rem;
+      height: 8rem;
   `};
 `;
 
 const Avatar = props => {
   return (
-    <AvatarCircle>
+    <AvatarCircle {...props}>
       <AvatarCaption>{props.name}</AvatarCaption>
     </AvatarCircle>
   );

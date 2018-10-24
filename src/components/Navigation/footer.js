@@ -1,5 +1,11 @@
-import React from "react";
+import React, { Component } from "react";
 import styled from "styled-components";
+import { TimelineMax, CSSPlugin } from "gsap/all";
+import InViewMonitor from "react-inview-monitor";
+import { linkData } from "./footerLinkData";
+
+// eslint-disable-next-line
+const plugins = [CSSPlugin];
 
 const Wrapper = styled.footer`
   height: 30rem;
@@ -18,20 +24,25 @@ const LinkList = styled.ul`
   grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
   grid-gap: 2.5rem;
   align-items: center;
+  transform: translateY(20px);
 `;
 
 const Link = styled.a`
-  transition: all .5s;
-  &:link, &:visited {
+  transition: all 0.5s;
+  opacity: 0;
+
+  &:link,
+  &:visited {
     font-size: 1.4rem;
     color: white;
     text-transform: uppercase;
     text-decoration: none;
     text-align: center;
-    background-color: rgba(255,255,255, .05);
+    background-color: rgba(255, 255, 255, 0.05);
     padding: 1.3rem;
   }
-  &:hover, &:active {
+  &:hover,
+  &:active {
     transform: translateY(-3px) scale(1.05);
     color: #b7ccff;
   }
@@ -47,31 +58,57 @@ const CopyrightBox = styled.div`
 const CopyrightText = styled.p`
   color: #fff;
   font-size: 1.6rem;
-  transition: all .5s;
+  transition: all 0.5s;
   &:hover {
     transform: translateY(-3px) scale(1.05);
     color: #b7ccff;
   }
 `;
 
-const footer = () => {
-  return (
-    <Wrapper>
-      <Linkbox>
-        <LinkList>
-          <Link href='#'>Team</Link>
-          <Link href='#'>Credit</Link>
-          <Link href='#'>Privacy Policy</Link>
-          <Link href='#'>Facebook</Link>
-            <Link href='#'>Linkedin</Link>
-            <Link href='#'>Instagram</Link>
-        </LinkList>
-      </Linkbox>
-      <CopyrightBox>
-        <CopyrightText>&copy; 2018 Frank Design</CopyrightText>
-      </CopyrightBox>
-    </Wrapper>
-  );
-};
+class Footer extends Component {
+  constructor(props) {
+    super(props);
+    this.links = [];
+    this.tl = new TimelineMax({ paused: true });
+  }
 
-export default footer;
+  startAnimation = () => {
+    this.tl.staggerTo(this.links, 0.3, { autoAlpha: 1, y: -20 }, 0.2).play();
+  };
+
+  reverseAnimation = () => {
+    this.tl.staggerTo(this.links, 0.1, { autoAlpha: 0, y: 0 }, 0.1).play();
+  };
+  render() {
+    return (
+      <Wrapper>
+        <Linkbox>
+          <InViewMonitor
+            onInView={this.startAnimation}
+            onNotInView={this.reverseAnimation}
+            repeatOnInView={true}
+          >
+            <LinkList>
+              {linkData.map((el, index) => {
+                return (
+                  <Link
+                    key={el.id}
+                    href={el.href}
+                    innerRef={li => (this.links[index] = li)}
+                  >
+                    {el.title}
+                  </Link>
+                );
+              })}
+            </LinkList>
+          </InViewMonitor>
+        </Linkbox>
+        <CopyrightBox>
+          <CopyrightText>&copy; 2018 Frank Design</CopyrightText>
+        </CopyrightBox>
+      </Wrapper>
+    );
+  }
+}
+
+export default Footer;

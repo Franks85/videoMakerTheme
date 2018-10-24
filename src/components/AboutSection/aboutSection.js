@@ -11,6 +11,7 @@ import { media } from "../../styledComponents/mediaQueryHelper";
 import withReveal from "react-reveal/withReveal";
 import HeadShake from "react-reveal/HeadShake";
 import Zoom from "react-reveal/Zoom";
+import avatar from "../AboutSection/img/avatar.jpg";
 
 const SectionLeft = styled.div`
   position: relative;
@@ -60,7 +61,14 @@ const AboutSection = () => {
   return (
     <SectionWrapper id="about">
       <SectionLeft>
-        <Avatar name="Teka" />
+        <Avatar
+          name="Teka"
+          width={14}
+          height={14}
+          top={70}
+          left={100}
+          url={avatar}
+        />
         <SectionTitleBox>
           <SectionTitleText>About</SectionTitleText>
         </SectionTitleBox>

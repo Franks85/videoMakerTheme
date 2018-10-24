@@ -1,4 +1,4 @@
-import { keyframes } from 'styled-components';
+import { keyframes } from "styled-components";
 
 const moveLeft = keyframes`
   0% {
@@ -74,12 +74,17 @@ const reveal = keyframes`
     opacity: 1;
     transform: translateY(0) ;
   }
-`
+`;
 
-export {
-    moveLeft,
-    moveRight,
-    moveUp,
-    pulse,
-    reveal
-}
+const scaleout = keyframes` 
+  0% {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
+  100% {
+    -webkit-transform: scale(1.0);
+    opacity: 0;
+    transform: scale(1.5);
+  }`;
+
+export { moveLeft, moveRight, moveUp, pulse, reveal, scaleout };

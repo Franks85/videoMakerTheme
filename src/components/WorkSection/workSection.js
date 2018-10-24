@@ -1,5 +1,7 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import styled from "styled-components";
+import Project from "./workDetail";
+import ProjectContent from './projectContent';
 import {
   SectionWrapper,
   SectionTitleBox,
@@ -9,9 +11,10 @@ import worksBg from "./img/worksBg.jpg";
 import cursor from "./img/cursor.png";
 import Toggle from "../../Utilities/Toggle";
 import Avatar from "../Avatar/avatar";
-import { Spring, config } from "react-spring";
 import { media } from "../../styledComponents/mediaQueryHelper";
-import Media from "react-media";
+import Fade from "react-reveal/Fade";
+import withReveal from "react-reveal/withReveal";
+import { workDataImg, workDataDesc, avatarData } from "./worksData";
 
 const SectionLeft = styled.div`
   position: relative;
@@ -20,6 +23,10 @@ const SectionLeft = styled.div`
   background-position: center;
   background-size: cover;
   will-change: background-color;
+  ${media.lessThan("tablet")`
+      flex: .5;
+      padding: 0;
+  `};
 `;
 
 const SectionRight = styled.div`
@@ -29,9 +36,24 @@ const SectionRight = styled.div`
   flex-direction: column;
 `;
 
-const WorkImageBoxOuter = styled.div`
+const WorkImageBoxOuter = withReveal(
+  styled.div`
+  flex: 1.7;
+  overflow: hidden;
+  position: relative;
+`, <Fade delay={300}/>
+);
+
+const WorkDescBox = styled.div`
   flex: 1;
   overflow: hidden;
+`;
+
+const WorkAvatarBox = styled.div`
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+  z-index: 2;
 `;
 
 const WorkImageTitle = styled.h2`
@@ -78,75 +100,73 @@ const WorkImageDescText = styled.p`
   color: #7d6c65;
 `;
 
-const AvatarAnim = styled(Avatar)``;
-
 class WorkSection extends Component {
+  state = {
+    id: 0
+  };
+  openImg = e => {
+    e.preventDefault();
+    const id = e.currentTarget.getAttribute("data-id");
+    this.setState({ id });
+  };
   render() {
-    const { bg, title, description } = this.props;
-    const Content = ({
-      opacity,
-      toggle,
-      on,
-      textRotate,
-      leftResize,
-      imgResize
-    }) => (
-      <SectionWrapper id="works">
-        <Media query={{ maxWidth: 760 }}>
-          {matches =>
-            matches ? (
-              <SectionLeft style={{ flex: 0.5 }}>
-                <AvatarAnim name="Teka" />
-                <SectionTitleBox>
-                  <SectionTitleText style={{ transform: `rotate(90deg)` }}>
-                    Works
-                  </SectionTitleText>
-                </SectionTitleBox>
-              </SectionLeft>
-            ) : (
-              <SectionLeft
-                style={{ opacity: `${opacity}`, flex: `${leftResize}` }}
-              >
-                <AvatarAnim name="Teka" />
-                <SectionTitleBox>
-                  <SectionTitleText style={{ transform: `${textRotate}` }}>
-                    Works
-                  </SectionTitleText>
-                </SectionTitleBox>
-              </SectionLeft>
-            )
-          }
-        </Media>
+    const { id } = this.state;
+    const worksImg = workDataImg.map(item => {
+      return (
+        <Fragment key={item.id}>
+          <WorkImageBoxInner background={item.background}>
+            <WorkImageTitle>{item.title}</WorkImageTitle>
+          </WorkImageBoxInner>
+        </Fragment>
+      );
+    });
 
-        <SectionRight>
-          <WorkImageBoxOuter onClick={toggle} style={{ flex: `${imgResize}` }}>
-            <WorkImageBoxInner background={bg}>
-              <WorkImageTitle>{title}</WorkImageTitle>
-            </WorkImageBoxInner>
-          </WorkImageBoxOuter>
-          <WorkImageBoxOuter>
-            <WorkImageDesc>
-              <WorkImageDescText>{description}</WorkImageDescText>
-            </WorkImageDesc>
-          </WorkImageBoxOuter>
-        </SectionRight>
-      </SectionWrapper>
-    );
+    const workDesc = workDataDesc.map(item => {
+      return (
+        <WorkImageDesc>
+          <WorkImageDescText key={item.id}>
+            {item.description}
+          </WorkImageDescText>
+        </WorkImageDesc>
+      );
+    });
+
+    const avatars = avatarData.map(item => {
+      return (
+        <Avatar
+          key={item.id}
+          data-id={item.id}
+          onClick={this.openImg}
+          name={item.name}
+          width={12}
+          height={12}
+          top={item.top}
+          left={item.left}
+          url={item.url}
+        />
+      );
+    });
 
     return (
       <Toggle>
-        {({ toggle, on }) => (
-          <Spring
-            config={config.slow}
-            to={{
-              opacity: on ? 0.7 : 0.9,
-              textRotate: on ? "rotate(90deg)" : "rotate(0deg)",
-              leftResize: on ? 0.3 : 1,
-              imgResize: on ? 1.4 : 1
-            }}
-            toggle={toggle}
-            children={Content}
-          />
+        {({ on, toggle }) => (
+          <SectionWrapper id="works">
+            <Project on={on} toggle={toggle}>
+              <ProjectContent />
+            </Project>
+            <SectionLeft>
+              <SectionTitleBox>
+                <SectionTitleText>Works</SectionTitleText>
+              </SectionTitleBox>
+            </SectionLeft>
+            <SectionRight>
+              <WorkImageBoxOuter onClick={toggle}>
+                {worksImg[id]}
+              </WorkImageBoxOuter>
+              <WorkDescBox>{workDesc[id]}</WorkDescBox>
+              <WorkAvatarBox>{avatars}</WorkAvatarBox>
+            </SectionRight>
+          </SectionWrapper>
         )}
       </Toggle>
     );

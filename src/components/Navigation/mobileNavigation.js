@@ -175,4 +175,3 @@ class MobileNavigation extends Component {
 }
 
 export default MobileNavigation;
-

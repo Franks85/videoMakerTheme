@@ -6,11 +6,10 @@ import {
   SectionTitleText
 } from "../../styledComponents/styledComponents";
 import contactBg from "./img/contactBg.jpg";
-import Avatar from "../Avatar/avatar";
 import withReveal from "react-reveal/withReveal";
 import Zoom from "react-reveal/Zoom";
-import HeadShake from "react-reveal/HeadShake";
 import { media } from "../../styledComponents/mediaQueryHelper";
+import { Icon } from "../../Utilities";
 
 const SectionLeft = styled.div`
   position: relative;
@@ -29,15 +28,12 @@ const SectionRight = styled.div`
   padding: 2rem 0;
 `;
 
-const SectionRightTitle = withReveal(
-  styled.h3`
-    font-size: 2.6rem;
-    text-align: center;
-    padding: 3rem 0;
-    text-shadow: 0 0.2rem 0.3rem rgba(255, 255, 255, 0.5);
-  `,
-  <HeadShake />
-);
+const SectionRightTitle = styled.h3`
+  font-size: 2.6rem;
+  text-align: center;
+  padding: 3rem 0;
+  text-shadow: 0 0.2rem 0.3rem rgba(255, 255, 255, 0.5);
+`;
 
 const TitleDivider = styled.div`
   border: 2px solid white;
@@ -49,17 +45,25 @@ const ContactBox = withReveal(
   styled.div`
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
     margin: 15% 0;
+    margin-left: 25%;
+    ${media.lessThan("phone")`
+      margin-left: 10%;
+  `};
   `,
-  <Zoom delay={300} />
+  <Zoom delay={300} bottom />
 );
+
+const ContactInfoBox = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+`;
 
 const ContactInfo = styled.p`
   font-size: 2rem;
   color: #fff;
-  margin: 2rem 0;
+  margin: 2rem;
   &:hover {
     color: #666;
   }
@@ -69,15 +73,16 @@ const SocialLink = styled.a`
   text-decoration: none;
   color: #685734;
   &:hover {
-    color: blueviolet;
+    color: #8b92dd;
   }
+  margin: 2rem;
+  font-size: 2rem;
 `;
 
 const contactSection = () => {
   return (
     <SectionWrapper id="contact">
       <SectionLeft>
-        <Avatar name="Teka" />
         <SectionTitleBox>
           <SectionTitleText>Contact</SectionTitleText>
         </SectionTitleBox>
@@ -86,14 +91,22 @@ const contactSection = () => {
         <SectionRightTitle>Matteo Toccaceli - Video Maker</SectionRightTitle>
         <TitleDivider />
         <ContactBox>
-          <ContactInfo>matteoVideomaker@gmail.com</ContactInfo>
-          <ContactInfo>350489753</ContactInfo>
-          <ContactInfo>
+          <ContactInfoBox>
+            <Icon name="email" color="#fff" />
+            <ContactInfo>teovideomaker@mail.com</ContactInfo>
+          </ContactInfoBox>
+          <ContactInfoBox>
+            <Icon name="telephone" color="#fff" />
+            <ContactInfo>350489753</ContactInfo>
+          </ContactInfoBox>
+          <ContactInfoBox>
+            <Icon name="facebook" color="#fff" />
             <SocialLink href="#">Facebook</SocialLink>
-          </ContactInfo>
-          <ContactInfo>
+          </ContactInfoBox>
+          <ContactInfoBox>
+            <Icon name="instagram" color="#fff" />
             <SocialLink href="#">Instagram</SocialLink>
-          </ContactInfo>
+          </ContactInfoBox>
         </ContactBox>
       </SectionRight>
     </SectionWrapper>
