@@ -26,6 +26,10 @@ const LinkList = styled.ul`
   grid-gap: 2.5rem;
   align-items: center;
   transform: translateY(20px);
+  ${media.lessThan("phone")`
+    grid-gap: 1rem;
+    transform: translateY(0px);
+  `};
 `;
 
 const Link = styled.a`
