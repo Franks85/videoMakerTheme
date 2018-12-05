@@ -86,7 +86,7 @@ const HeaderTitleBox = withReveal(
     justify-content: start;
     align-items: center;
   `,
-  <Flash delay={1000} />
+  <Flash delay={800} />
 );
 
 const HeaderTitle = styled.h2`
@@ -109,6 +109,7 @@ const HeaderTitleIcon = styled.div`
       position: fixed;
       top: 2rem;
       right: 3rem;
+      cursor: none;
   `};
 `;
 

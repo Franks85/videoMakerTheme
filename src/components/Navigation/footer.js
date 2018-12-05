@@ -30,6 +30,9 @@ const LinkList = styled.ul`
 const Link = styled.a`
   transition: all 0.5s;
   opacity: 0;
+  ${media.lessThan("phone")`
+      opacity: 1;
+  `};
 
   &:link,
   &:visited {

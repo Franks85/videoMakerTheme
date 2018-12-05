@@ -50,7 +50,7 @@ const SectionRightDescription = withReveal(
     text-align: justify;
     margin: 2rem 4rem 2rem 10rem;
     ${media.lessThan("phone")`
-      font-size: 1.5rem;
+      font-size: 1.4rem;
       margin: 2rem 2rem 2rem 4rem;
   `};
   `,
@@ -89,10 +89,6 @@ const AboutSection = () => {
           Pellentesque viverra urna eu hendrerit lobortis. In quis auctor felis,
           vel consectetur massa. Morbi ac rutrum dolor. Aenean at justo
           hendrerit, cursus elit eget, congue ligula.
-        </SectionRightDescription>
-        <SectionRightDescription>
-          Aliquam consectetur sagittis neque vel gravida. Aenean at tincidunt
-          nulla. Nulla hendrerit mattis ex at tincidunt.
         </SectionRightDescription>
       </SectionRight>
     </SectionWrapper>
