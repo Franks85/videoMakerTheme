@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { TimelineMax, CSSPlugin } from "gsap/all";
 import InViewMonitor from "react-inview-monitor";
 import { linkData } from "./footerLinkData";
+import { media } from "../../styledComponents/mediaQueryHelper";
 
 // eslint-disable-next-line
 const plugins = [CSSPlugin];
