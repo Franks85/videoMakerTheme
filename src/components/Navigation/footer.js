@@ -18,6 +18,9 @@ const Wrapper = styled.footer`
 const Linkbox = styled.div`
   flex: 1;
   padding: 8rem;
+  ${media.lessThan("phone")`
+    padding: 2.5rem;
+  `};
 `;
 
 const LinkList = styled.ul`
@@ -27,7 +30,7 @@ const LinkList = styled.ul`
   align-items: center;
   transform: translateY(20px);
   ${media.lessThan("phone")`
-    grid-gap: 1rem;
+    grid-gap: 1.5rem;
     transform: translateY(0px);
   `};
 `;
